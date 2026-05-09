@@ -6,6 +6,7 @@
 # include <string.h>
 # include <dirent.h>
 # include <unistd.h>
+# include <sys/stat.h> 
 
 typedef struct s_args
 {
