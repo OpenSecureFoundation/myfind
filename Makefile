@@ -2,7 +2,7 @@ CC      = gcc
 CFLAGS  = -Wall -Wextra -Werror
 NAME    = myfind
 
-SRCS    = main.c parcours.c parse.c test_temp.c
+SRCS    = main.c parcours.c parse.c affichage.c filter.c
 OBJS    = $(SRCS:.c=.o)
 
 all: $(NAME)

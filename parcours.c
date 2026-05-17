@@ -18,7 +18,7 @@ void traverse(char *path, t_args *args)
         if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
             continue ;
         snprintf(full_path, sizeof(full_path), "%s/%s", path, entry->d_name);
-        if (filter(entry->d_name, args))
+        if (filter(entry->d_name, full_path, args))
             display(full_path);
         if (lstat(full_path, &info) == 0 && S_ISDIR(info.st_mode))
             traverse(full_path, args);
