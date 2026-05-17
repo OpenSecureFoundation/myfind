@@ -19,5 +19,5 @@ t_args  *parse_args(int argc, char **argv);
 void    traverse(char *path, t_args *args);
 int     filter(char *filename, t_args *args);
 void    display(char *path);
-
+void sort_strings(char **files, int count);
 #endif
