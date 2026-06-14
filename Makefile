@@ -1,7 +1,6 @@
 CC      = gcc
 CFLAGS  = -Wall -Wextra -Werror
 NAME    = myfind
-
 SRCS    = main.c parcours.c parse.c affichage.c filter.c
 OBJS    = $(SRCS:.c=.o)
 
@@ -20,3 +19,5 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
+
+.PHONY: all clean fclean re

@@ -1,5 +1,7 @@
 #ifndef MYFIND_H
 # define MYFIND_H
+# define _GNU_SOURCE
+# define _XOPEN_SOURCE 700
 
 # include <stdio.h>
 # include <stdlib.h>
