@@ -31,6 +31,9 @@ typedef struct s_args
     char    *newer;
     char    *newermt;
     int     amin;
+    int     mmin;
+    int     cmin;
+    char    *newerat;
 
     /* ── Filtres fichiers ── */
     int     perm;
@@ -49,6 +52,12 @@ typedef struct s_args
     int     links;
     int     maxdepth;
     int     mindepth;
+    char    *samefile;
+    char    *xtype;
+    char    *lname;
+    char    *ilname;
+    char    *wholename;
+    char    *iwholename;
 
     /* ── Actions ── */
     int     do_print;
@@ -61,12 +70,19 @@ typedef struct s_args
     char    *printf_fmt;
     char    *fprint_file;
     int     do_quit;
+    char    *fprint0_file;
+    char    *fprintfmt_file;
+    int     exit_code;
 
     /* ── Logique ── */
     int     do_and;
     int     do_or;
     int     do_not;
     int     do_prune;
+
+    /* ── Global ── */
+    int     do_depth;
+    int     do_xdev;
 }   t_args;
 
 /* ── Prototypes ── */

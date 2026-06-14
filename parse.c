@@ -2,57 +2,73 @@
 
 static void init_args(t_args *args, char *path)
 {
-    args->path        = path;
+    args->path         = path;
 
     /* Déjà présentes */
-    args->name        = NULL;
-    args->type        = NULL;
-    args->user        = NULL;
-    args->size        = -1;
-    args->mtime       = -1;
+    args->name         = NULL;
+    args->type         = NULL;
+    args->user         = NULL;
+    args->size         = -1;
+    args->mtime        = -1;
 
     /* Temps */
-    args->atime       = -1;
-    args->ctime       = -1;
-    args->newer       = NULL;
-    args->newermt     = NULL;
-    args->amin        = -1;
+    args->atime        = -1;
+    args->ctime        = -1;
+    args->newer        = NULL;
+    args->newermt      = NULL;
+    args->amin         = -1;
+    args->mmin         = -1;
+    args->cmin         = -1;
+    args->newerat      = NULL;
 
     /* Filtres fichiers */
-    args->perm        = -1;
-    args->empty       = 0;
-    args->readable    = 0;
-    args->writable    = 0;
-    args->executable  = 0;
-    args->iname       = NULL;
-    args->fpath       = NULL;
-    args->ipath       = NULL;
-    args->regex       = NULL;
-    args->group       = NULL;
-    args->nogroup     = 0;
-    args->nouser      = 0;
-    args->inum        = -1;
-    args->links       = -1;
-    args->maxdepth    = -1;
-    args->mindepth    = -1;
+    args->perm         = -1;
+    args->empty        = 0;
+    args->readable     = 0;
+    args->writable     = 0;
+    args->executable   = 0;
+    args->iname        = NULL;
+    args->fpath        = NULL;
+    args->ipath        = NULL;
+    args->regex        = NULL;
+    args->group        = NULL;
+    args->nogroup      = 0;
+    args->nouser       = 0;
+    args->inum         = -1;
+    args->links        = -1;
+    args->maxdepth     = -1;
+    args->mindepth     = -1;
+    args->samefile     = NULL;
+    args->xtype        = NULL;
+    args->lname        = NULL;
+    args->ilname       = NULL;
+    args->wholename    = NULL;
+    args->iwholename   = NULL;
 
     /* Actions */
-    args->do_print    = 1;  /* comportement par défaut */
-    args->do_print0   = 0;
-    args->do_ls       = 0;
-    args->do_delete   = 0;
-    args->exec_cmd    = NULL;
-    args->execdir_cmd = NULL;
-    args->do_ok       = 0;
-    args->printf_fmt  = NULL;
-    args->fprint_file = NULL;
-    args->do_quit     = 0;
+    args->do_print     = 1;
+    args->do_print0    = 0;
+    args->do_ls        = 0;
+    args->do_delete    = 0;
+    args->exec_cmd     = NULL;
+    args->execdir_cmd  = NULL;
+    args->do_ok        = 0;
+    args->printf_fmt   = NULL;
+    args->fprint_file  = NULL;
+    args->do_quit      = 0;
+    args->fprint0_file = NULL;
+    args->fprintfmt_file = NULL;
+    args->exit_code    = -1;
 
     /* Logique */
-    args->do_and      = 0;
-    args->do_or       = 0;
-    args->do_not      = 0;
-    args->do_prune    = 0;
+    args->do_and       = 0;
+    args->do_or        = 0;
+    args->do_not       = 0;
+    args->do_prune     = 0;
+
+    /* Global */
+    args->do_depth     = 0;
+    args->do_xdev      = 0;
 }
 
 t_args  *parse_args(int argc, char **argv)
@@ -97,10 +113,16 @@ t_args  *parse_args(int argc, char **argv)
             { args->newermt = argv[++i]; }
         else if (strcmp(argv[i], "-amin") == 0 && i + 1 < argc)
             { args->amin = atoi(argv[++i]); }
+        else if (strcmp(argv[i], "-mmin") == 0 && i + 1 < argc)
+            { args->mmin = atoi(argv[++i]); }
+        else if (strcmp(argv[i], "-cmin") == 0 && i + 1 < argc)
+            { args->cmin = atoi(argv[++i]); }
+        else if (strcmp(argv[i], "-newerat") == 0 && i + 1 < argc)
+            { args->newerat = argv[++i]; }
 
         /* ══ Filtres fichiers ══ */
         else if (strcmp(argv[i], "-perm") == 0 && i + 1 < argc)
-            { args->perm = (int)strtol(argv[++i], NULL, 8); }  /* octal */
+            { args->perm = (int)strtol(argv[++i], NULL, 8); }
         else if (strcmp(argv[i], "-empty") == 0)
             { args->empty = 1; }
         else if (strcmp(argv[i], "-readable") == 0)
@@ -131,6 +153,18 @@ t_args  *parse_args(int argc, char **argv)
             { args->maxdepth = atoi(argv[++i]); }
         else if (strcmp(argv[i], "-mindepth") == 0 && i + 1 < argc)
             { args->mindepth = atoi(argv[++i]); }
+        else if (strcmp(argv[i], "-samefile") == 0 && i + 1 < argc)
+            { args->samefile = argv[++i]; }
+        else if (strcmp(argv[i], "-xtype") == 0 && i + 1 < argc)
+            { args->xtype = argv[++i]; }
+        else if (strcmp(argv[i], "-lname") == 0 && i + 1 < argc)
+            { args->lname = argv[++i]; }
+        else if (strcmp(argv[i], "-ilname") == 0 && i + 1 < argc)
+            { args->ilname = argv[++i]; }
+        else if (strcmp(argv[i], "-wholename") == 0 && i + 1 < argc)
+            { args->wholename = argv[++i]; }
+        else if (strcmp(argv[i], "-iwholename") == 0 && i + 1 < argc)
+            { args->iwholename = argv[++i]; }
 
         /* ══ Actions ══ */
         else if (strcmp(argv[i], "-print") == 0)
@@ -153,6 +187,12 @@ t_args  *parse_args(int argc, char **argv)
             { args->fprint_file = argv[++i]; }
         else if (strcmp(argv[i], "-quit") == 0)
             { args->do_quit = 1; }
+        else if (strcmp(argv[i], "-fprint0") == 0 && i + 1 < argc)
+            { args->fprint0_file = argv[++i]; }
+        else if (strcmp(argv[i], "-fprintfmt") == 0 && i + 1 < argc)
+            { args->fprintfmt_file = argv[++i]; }
+        else if (strcmp(argv[i], "-exit") == 0 && i + 1 < argc)
+            { args->exit_code = atoi(argv[++i]); }
 
         /* ══ Logique ══ */
         else if (strcmp(argv[i], "-and") == 0 || strcmp(argv[i], "-a") == 0)
@@ -163,6 +203,12 @@ t_args  *parse_args(int argc, char **argv)
             { args->do_not = 1; }
         else if (strcmp(argv[i], "-prune") == 0)
             { args->do_prune = 1; }
+
+        /* ══ Global ══ */
+        else if (strcmp(argv[i], "-depth") == 0)
+            { args->do_depth = 1; }
+        else if (strcmp(argv[i], "-xdev") == 0)
+            { args->do_xdev = 1; }
 
         else
             printf("Unknown or incomplete option: %s\n", argv[i]);

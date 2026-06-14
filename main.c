@@ -12,7 +12,7 @@ int main(int argc, char **argv)
     args = parse_args(argc, argv);
     if (!args)
         return 1;
-    traverse(args->path, args, 0);  /* depth démarre à 0 */
+    traverse(args->path, args, 0);
     free(args);
     return 0;
 }
