@@ -1,3 +1,12 @@
+/*
+** myfind.h — structure d'options et prototypes communs.
+**
+** t_args centralise l'ensemble des critères de filtrage (-name, -type,
+** -size, ...), des actions (-print, -delete, -exec, ...) et des options
+** de parcours (-maxdepth, -depth, -prune, ...) reconnus par parse_args().
+** Cette structure est ensuite consultée par filter() (filter.c),
+** traverse()/traverse_dir() (parcours.c) et display() (affichage.c).
+*/
 #ifndef MYFIND_H
 # define MYFIND_H
 # define _GNU_SOURCE
@@ -14,6 +23,7 @@
 # include <grp.h>
 # include <regex.h>
 # include <fnmatch.h>
+# include <limits.h>   /* PATH_MAX, utilisé par parcours.c */
 
 typedef struct s_args
 {
