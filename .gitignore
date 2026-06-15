@@ -1,2 +1,5 @@
 myfind
 *.o
+*~
+core
+testdir/
