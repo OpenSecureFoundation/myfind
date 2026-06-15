@@ -3,13 +3,14 @@ CFLAGS  = -Wall -Wextra -Werror
 NAME    = myfind
 SRCS    = main.c parcours.c parse.c affichage.c filter.c
 OBJS    = $(SRCS:.c=.o)
+HEADERS = myfind.h
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
-%.o: %.c
+%.o: %.c $(HEADERS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
